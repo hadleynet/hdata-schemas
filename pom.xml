@@ -7,12 +7,48 @@
   <version>1.0-SNAPSHOT</version>
   <name>hdata-schemas</name>
   <url>http://maven.apache.org</url>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <id>0</id>
+            <phase>generate-resources</phase>
+            <configuration>
+              <tasks>
+                <!-- The following line needs to be edited (or removed) to
+                suit your environment. Maven doesn't pass its proxy settings
+                on to ant. -->
+								<setproxy proxyhost="gatekeeper.mitre.org" proxyport="80"/>
+                <get src="http://github.com/projecthdata/hData/raw/master/schemas/2009/11/section_metadata.xsd" dest="src/main/resources/org/projecthdata/schemas/section_metadata.xsd"/>
+                <get src="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd" dest="src/main/resources/org/projecthdata/schemas/xmldsig-core-schema.xsd"/>
+                <get src="http://www.w3.org/2001/XMLSchema.dtd" dest="src/main/resources/org/projecthdata/schemas/XMLSchema.dtd"/>
+                <get src="http://www.w3.org/2001/datatypes.dtd" dest="src/main/resources/org/projecthdata/schemas/datatypes.dtd"/>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>1</id>
+            <phase>clean</phase>
+            <configuration>
+              <tasks>
+                <delete file="src/main/resources/org/projecthdata/schemas/section_metadata.xsd"/>
+                <delete file="src/main/resources/org/projecthdata/schemas/xmldsig-core-schema.xsd"/>
+                <delete file="src/main/resources/org/projecthdata/schemas/XMLSchema.dtd"/>
+                <delete file="src/main/resources/org/projecthdata/schemas/datatypes.dtd"/>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

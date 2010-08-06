@@ -1,0 +1,6 @@
+Maven project to bundle necessary schema and DTD files for java-hstore project.
+
+ISSUE: you will need to edit or remove the setProxy line in pom.xml to suit
+the build environment. The Maven Antrun plugin doesn't pass any HTTP proxy
+information to the Ant tasks and the standard means of setting a proxy for Ant
+also don't work for tasks executed by the Antrun plugin.
